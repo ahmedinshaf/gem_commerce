@@ -1,4 +1,4 @@
 {
-    "mongoURI":"mongodb://localhost:27017/gem_e-commerce?readPreference=primary&appname=MongoDB%20Compass&ssl=false",
+    "mongoURI":"mongodb+srv://inshaf:127149@cluster0.sdkcu.mongodb.net/e-commerce?retryWrites=true&w=majority",
     "jwtSecret":"my_secret"
 }

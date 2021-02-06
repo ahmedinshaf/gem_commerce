@@ -12,7 +12,20 @@ const getCategoryById = async (req,res) => {
 
 //Add a category
 const addCategory = async (req,res) => {
-    res.send(`addCategory`)
+    const {name,image,isSizeOption,isColorOption} = req.body;
+    const category = new Category({
+        name,
+        image,
+        isSizeOption,
+        isColorOption
+    })
+    try{
+        await category.save()
+        res.send(category)
+    }catch(err){
+        console.log(err.message);
+        res.status(500).send('Server Error')
+    }
 }
 
 //Edit category
