@@ -1,28 +1,28 @@
 const Category = require('../models/Category');
 
 //Get all categories
-const getAllCategories = async () => {
-    
+const getAllCategories = async (req,res) => {
+    res.send(`getAllCategories`)
 }
 
 //Get category by id
-const getCategoryById = async () => {
-    
+const getCategoryById = async (req,res) => {
+    res.send(`getCategoryById`)
 }
 
 //Add a category
-const addCategory = async () => {
-    
+const addCategory = async (req,res) => {
+    res.send(`addCategory`)
 }
 
 //Edit category
-const editCategory = async () => {
-    
+const editCategory = async (req,res) => {
+    res.send(`editCategory`)
 }
 
 //Delete category
-const c = async () => {
-    
+const deleteCategory = async (req,res) => {
+    res.send(`deleteCategory`)
 }
 
 
@@ -34,6 +34,6 @@ module.exports={
     getCategoryById,
     addCategory,
     editCategory,
-    editCategory
+    deleteCategory
 
 }

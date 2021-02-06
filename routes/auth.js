@@ -1,12 +1,35 @@
 const router = require("express").Router();
-const auth = require('../middleware/auth')
-const {login} = require('../controller/user')
-const {validateUserLogin} = require('../middleware/validators/users')
+const {
+    adminRegister,
+    adminLogin,
+    customerRegister,
+    customerLogin,
+} = require('../controller/auth')
 
 
-// @route   GET api/auth
-// @desc    Login (Authenticate user & get token)
+// @route   GET api/auth/register
+// @desc    Register (Authenticate user & get token)
 // @access  Public
-router.post("/login",validateUserLogin,login);
+router.post("/register",customerRegister);
+
+
+// @route   GET api/auth/login
+// @desc    Login (Register user & get token)
+// @access  Public
+router.post("/login",customerLogin);
+
+
+// @route   GET api/admin/register
+// @desc    Admin Login (Authenticate Admin & get token)
+// @access  Public
+router.post("/admin/register",adminRegister);
+
+
+// @route   GET api/admin/login
+// @desc    Login Admin (Authenticate Admin & get token)
+// @access  Public
+router.post("/admin/login",adminLogin);
+
+
 
 module.exports = router

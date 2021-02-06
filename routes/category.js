@@ -1,31 +1,37 @@
 const router = require("express").Router();
-const {} = require('../controller/category')
+const {
+    getAllCategories,
+    getCategoryById,
+    addCategory,
+    editCategory,
+    deleteCategory
+} = require('../controller/category')
 const {} = require('../middleware/validators/category')
 
 // @route   GET api/category
 // @desc    get all categories
 // @access  Public
-router.get("/",(req,res)=>res.send(`Get all categories`));
+router.get("/",getAllCategories);
 
 // @route   GET api/category/:id
 // @desc    get category by id
 // @access  Public
-router.get("/:id",(req,res)=>res.send(`Get all categories`));
+router.get("/:id",getCategoryById);
 
 // @route   POST api/category
 // @desc    add a category
 // @access  admin
-router.post("/",(req,res)=>res.send(`Add a category`));
+router.post("/",addCategory);
 
 // @route   POST api/category/:id
 // @desc    Edit a category
 // @access  admin
-router.patch("/:id",(req,res)=>res.send(`Edit category category`));
+router.patch("/:id",editCategory);
 
 // @route   POST api/category/:id
 // @desc    Delete a category (delete all products in the category)
 // @access  admin
-router.delete("/:id",(req,res)=>res.send(`Delete a category category`));
+router.delete("/:id",deleteCategory);
 
 
 module.exports = router
