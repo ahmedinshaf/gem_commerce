@@ -19,13 +19,13 @@ router.post("/register",customerRegister);
 router.post("/login",customerLogin);
 
 
-// @route   GET api/admin/register
+// @route   GET api/auth/admin/register
 // @desc    Admin Login (Authenticate Admin & get token)
 // @access  Public
 router.post("/admin/register",adminRegister);
 
 
-// @route   GET api/admin/login
+// @route   GET api/auth/admin/login
 // @desc    Login Admin (Authenticate Admin & get token)
 // @access  Public
 router.post("/admin/login",adminLogin);

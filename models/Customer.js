@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
-    name:{
+const customerSchema = new mongoose.Schema({
+    username:{
         type:String,
         required:true
     },
@@ -20,7 +20,10 @@ const userSchema = new mongoose.Schema({
     date:{
         type:Date,
         default:Date.now
-    }
+    },
+    tokens: [{
+        token: {type: String,required:true}
+    }],
 });
 
-module.exports = User = mongoose.model('User',userSchema);
+module.exports = Customer = mongoose.model('Customer',customerSchema);
