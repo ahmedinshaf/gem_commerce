@@ -87,22 +87,15 @@ const adminLogin = async (req,res) => {
 }
 
 //customer register
+//@desc req -> customer email , customer password
+//@desc res -> Customer Object ({ email,password })
 const customerRegister = async (req,res) => {
     const{
-        username,
         email,
         password,
-        avatar
     } = req.body;
     try{ 
-      let usernameNotTaken = await (validateUsername(username,'customer'));
       let emailNotRegistered = await (validateEmail(email,'customer'));
-      if (!usernameNotTaken) {
-          return res.status(400).json({
-              message: `Username already taken`,
-              success: false
-          });
-      }
       if (!emailNotRegistered) {
           return res.status(400).json({
               message: `Email already Registered`,
@@ -111,23 +104,27 @@ const customerRegister = async (req,res) => {
       }
         const hashedPassword = await bcrypt.hash(password, 12);
         const customer = new Customer({
-            username,
             email,
             password:hashedPassword,
-            avatar
         })
+        const token = await (createWebToken(customer, '7 days'));
+        customer.tokens = [{token}]
         await customer.save()
-        res.send(customer)
+        res.send({
+            ...customer._doc,
+            token})
     }catch(err){
         console.log(err.message);
         res.status(500).send('Server Error')
     }
 }
 //customer login
+//@desc req -> 
+//@desc res -> 
 const customerLogin = async (req,res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try{
-    const customer = await Customer.findOne({ username });
+    const customer = await Customer.findOne({ email });
     if (!customer) {
         return res.status(404).json({
             message: "User is not found,Invalid login Credentials",
@@ -142,7 +139,6 @@ const customerLogin = async (req,res) => {
             customer.tokens = customer.tokens.concat({ token });
             await customer.save();
             let result = {
-                username: customer.username,
                 email: customer.email,
                 tokens:customer.tokens,
                 token:`Bearer ${token}`,
