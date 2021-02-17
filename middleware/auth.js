@@ -8,7 +8,7 @@ const auth = (req,res,next)=>{
     //verify token
     try{
         const decoded = jwt.verify(token,config.get('jwtSecret'))
-        req.user = decoded.user;
+        req.customer = decoded._id;
         next();
     }catch(err){
         return res.status(404).json({msg:'Token is not valid'})

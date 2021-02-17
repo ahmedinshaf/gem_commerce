@@ -4,6 +4,8 @@ const Customer = require('../models/Customer')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const config =  require('config');
+
 //admin register
 const adminRegister = async (req,res) => {
     const{
@@ -122,6 +124,7 @@ const customerRegister = async (req,res) => {
 //@desc req -> 
 //@desc res -> 
 const customerLogin = async (req,res) => {
+    console.log('login')
     const { email, password } = req.body;
     try{
     const customer = await Customer.findOne({ email });
@@ -131,6 +134,7 @@ const customerLogin = async (req,res) => {
             success: false
         })
     }
+    console.log(customer)
         //check password
     let isMatch = await bcrypt.compare(password, customer.password);
         if (isMatch) {
@@ -141,7 +145,7 @@ const customerLogin = async (req,res) => {
             let result = {
                 email: customer.email,
                 tokens:customer.tokens,
-                token:`Bearer ${token}`,
+                token,
             };
             return res.status(200).json({
                 ...result,
@@ -160,6 +164,18 @@ const customerLogin = async (req,res) => {
             console.log(err.message);
             res.status(500).send('Server Error')
         }
+}
+
+//
+const test = async(req,res) => {
+    console.log(req.customer)
+    try{
+        const customer = await Customer.findById(req.customer).select('-password');
+        res.json(customer);
+    }catch(err){
+        console.log(err.message);
+        res.status(500).send('Server Error');
+    }
 }
 
 const checkRole = roles => (req, res, next) => !roles.includes(req.user.role) ? res.status(401).json("Unauthorized") : next();
@@ -195,7 +211,7 @@ const validateEmail = async (email,role) => {
 const createWebToken = async (userObject, validPeriod) => {
     return await jwt.sign({
         _id:userObject._id
-    }, 'App Secret ', { expiresIn: validPeriod });
+    }, config.get('jwtSecret'), { expiresIn: validPeriod });
 }
 
 
@@ -204,4 +220,5 @@ module.exports={
     adminLogin,
     customerRegister,
     customerLogin,
+    test
 }

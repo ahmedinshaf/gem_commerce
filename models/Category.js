@@ -3,17 +3,17 @@ const mongoose = require("mongoose");
 const categorySchema = new mongoose.Schema({
     name:{
         type:String,
-        required:true
+        // required:true
     },
     image:{
         type:String
     },
     isSizeOption:{
         type:Boolean,
-        required:true
+        // required:true
     },
     isColorOption:{
-        required:true,
+        // required:true,
         type:Boolean
     }
 });

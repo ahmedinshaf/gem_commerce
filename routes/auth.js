@@ -1,9 +1,11 @@
 const router = require("express").Router();
+const auth = require('../middleware/auth')
 const {
     adminRegister,
     adminLogin,
     customerRegister,
     customerLogin,
+    test
 } = require('../controller/auth')
 
 
@@ -30,6 +32,9 @@ router.post("/admin/register",adminRegister);
 // @access  Public
 router.post("/admin/login",adminLogin);
 
-
+// @route   GET api/auth/
+// @desc    Test route
+// @access  Public
+router.get("/",auth,test);
 
 module.exports = router
